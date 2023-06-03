@@ -6,7 +6,7 @@ export default async function handler(req, res) {
 	if (session) {
 		// Signed in
 		console.log("Session", JSON.stringify(session, null, 2));
-		res.json({
+		res.status(200).json({
 			isAuthorized: true,
 			data: session["user"],
 		});
