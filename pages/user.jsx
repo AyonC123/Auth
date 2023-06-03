@@ -2,9 +2,6 @@ import React from "react";
 import { useSession } from "next-auth/react";
 
 export default function User() {
-	const getData = async () => {
-		return await (await fetch("localhost://api/isauthorized")).json();
-	};
 	const { data: session } = useSession({ required: true });
 	return (
 		<>
