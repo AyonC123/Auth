@@ -34,3 +34,6 @@ js/.env
 # typescript
 *.tsbuildinfo
 /js/next-env.d.ts
+
+# python
+/py/__pycache__
