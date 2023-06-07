@@ -1,5 +1,6 @@
 from flask import Blueprint, request, jsonify
 import sqlite3
+import base64
 
 views = Blueprint(__name__, "views")
 
@@ -14,10 +15,21 @@ def signUp():
     if request.method == "POST":
         name = request.form["name"]
         email = request.form["email"]
-        cur.execute(f"""INSERT OR IGNORE INTO signup VALUES ({name}, {email})""")
+        cur.execute(
+            f"""INSERT OR IGNORE INTO signup VALUES ({name}, {base64.b64encode(email.encode('ascii')).decode('ascii')})"""
+        )
         con.commit()
+        print(name, email)
         return jsonify({"name": name, "email": email})
     else:
+        data = []
         for row in con.execute("""SELECT * FROM signup"""):
-            print(row)
-        return jsonify({})
+            data.append(
+                {
+                    "name": row["name"],
+                    "email": base64.decode(row["email"].encode("ascii")).decode(
+                        "ascii"
+                    ),
+                }
+            )
+        return jsonify(data)
