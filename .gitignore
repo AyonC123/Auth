@@ -37,3 +37,4 @@ js/.env
 
 # python
 /py/__pycache__
+/py/example.db
