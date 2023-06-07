@@ -19,7 +19,6 @@ def signUp():
             f"""INSERT OR IGNORE INTO signup VALUES ({name}, {base64.b64encode(email.encode('ascii')).decode('ascii')})"""
         )
         con.commit()
-        print(name, email)
         return jsonify({"name": name, "email": email})
     else:
         data = []
