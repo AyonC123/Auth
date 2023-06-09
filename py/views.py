@@ -16,19 +16,16 @@ def signUp():
         name = request.form["name"]
         email = request.form["email"]
         cur.execute(
-            f"""INSERT OR IGNORE INTO signup VALUES ({name}, {base64.b64encode(email.encode('ascii')).decode('ascii')})"""
+            """INSERT OR IGNORE INTO signup VALUES (?, ?)""", (name, email)
         )
         con.commit()
         return jsonify({"name": name, "email": email})
     else:
         data = []
         for row in con.execute("""SELECT * FROM signup"""):
-            data.append(
-                {
-                    "name": row["name"],
-                    "email": base64.decode(row["email"].encode("ascii")).decode(
-                        "ascii"
-                    ),
-                }
-            )
+            print(row[1])
+            data.append({
+                "name": row[0],
+                "email": row[1]
+            })
         return jsonify(data)
