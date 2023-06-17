@@ -27,8 +27,8 @@ def write():
         client.send(message.encode('ascii'))
 
 
-recieveThread = threading.Thread(target=recieve)
-recieveThread.start()
+recieveThread = threading.Thread(target=recieve, daemon=True)
+recieveThread.run()
 
-writeThread = threading.Thread(target=write)
-writeThread.start()
+writeThread = threading.Thread(target=write, daemon=True)
+writeThread.run()

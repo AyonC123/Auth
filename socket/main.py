@@ -44,9 +44,11 @@ def recieve():
 
     print(nicknames, clients)
 
-    thread = threading.Thread(target=handle, args=(client,))
-    thread.start()
+    thread = threading.Thread(target=handle, args=(client,), daemon=True)
+    thread.run()
+    print("hi")
 
 
 print('Server is listening...')
-recieve()
+while True:
+    recieve()
