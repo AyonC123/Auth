@@ -1,18 +1,18 @@
 import socket
 import threading
 
-nickname = input('Choose a nickname: ')
+nickname = input("Choose a nickname: ")
 
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-client.connect(('127.0.0.1', 55555))
+client.connect(("127.0.0.1", 55555))
 
 
 def recieve():
     while True:
         try:
-            message = client.recv(1024).decode('ascii')
+            message = client.recv(1024).decode("ascii")
             if message == "NICK":
-                client.send(nickname.encode('ascii'))
+                client.send(nickname.encode("ascii"))
             else:
                 print(message)
         except:
@@ -24,11 +24,11 @@ def recieve():
 def write():
     while True:
         message = f"{nickname}: {input('')}"
-        client.send(message.encode('ascii'))
+        client.send(message.encode("ascii"))
 
 
-recieveThread = threading.Thread(target=recieve, daemon=True)
-recieveThread.run()
+recieveThread = threading.Thread(target=recieve)
+recieveThread.start()
 
-writeThread = threading.Thread(target=write, daemon=True)
-writeThread.run()
+writeThread = threading.Thread(target=write)
+writeThread.start()
