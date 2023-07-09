@@ -1,4 +1,4 @@
-from os import path
+from os import path, walk
 import sys
 
 args = sys.argv
@@ -29,6 +29,7 @@ else:
             for i in range(len(file) - number):
                 letter = number + i - 1
                 if file[letter] != char:
+                    file[letter]
                     continue
                 else:
                     return letter
@@ -44,10 +45,22 @@ else:
                         case "p":
                             print("p start")
                             char += 1
-                            if file[char] != ">":
-                                print(f"missing '>' at {findLine(char)}")
-                                break
-                            else:
+                            if file[char] == " ":
+                                char += 1
+                                char = findChar("=", char)
+                                if file[char+1] != "\"":
+                                    print(
+                                        f"missing or '\"' at {findLine(char)}")
+                                    break
+
+                                char += 3
+
+                                char = findChar('"', char)
+                                char += 1
+                                if file[char] != ">":
+                                    print(f"missing '>' at {findLine(char)}")
+                                    break
+
                                 print("p content")
                                 char = findChar("<", char)
                                 if file[char+1] != "/":
@@ -66,7 +79,8 @@ else:
                                     char += 1
                                     print('p end')
 
-                        case "h":
-                            print("heading")
+                            elif file[char] != ">":
+                                print(f"missing '>' at {findLine(char)}")
+                                break
 
         parse()
