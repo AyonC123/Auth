@@ -28,35 +28,35 @@ else:
                     return letter
 
         def parse():
-            for i in range(len(file)):
-                if file[i] == "\n":
-                    lines.append(i)
-                if file[i] == "<":
-                    i += 1
-                    match file[i]:
+            for char in range(len(file)):
+                if file[char] == "\n":
+                    lines.append(char)
+                if file[char] == "<":
+                    char += 1
+                    match file[char]:
                         case "p":
                             print("p start")
-                            i += 1
-                            if file[i] != ">":
-                                print(f"missing '>' at {findLine(i)}")
+                            char += 1
+                            if file[char] != ">":
+                                print(f"missing '>' at {findLine(char)}")
                                 break
                             else:
                                 print("p content")
-                                i = findChar("<", i)
-                                if file[i+1] != "/":
-                                    print(f"missing '/' at {findLine(i)}")
+                                char = findChar("<", char)
+                                if file[char+1] != "/":
+                                    print(f"missing '/' at {findLine(char)}")
                                 else:
-                                    i += 2
+                                    char += 2
 
-                                if file[i] != "p":
-                                    print(f"missing '/' at {findLine(i)}")
+                                if file[char] != "p":
+                                    print(f"missing 'p' at {findLine(char)}")
                                 else:
-                                    i += 1
+                                    char += 1
 
-                                if file[i] != ">":
-                                    print(f"missing '/' at {findLine(i)}")
+                                if file[char] != ">":
+                                    print(f"missing '>' at {findLine(char)}")
                                 else:
-                                    i += 1
+                                    char += 1
                                     print('p end')
 
                         case "h":
