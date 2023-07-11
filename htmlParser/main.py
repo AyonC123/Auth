@@ -1,4 +1,4 @@
-from os import path, walk
+from os import path
 import sys
 
 args = sys.argv
