@@ -1,14 +1,10 @@
-string = """
-<p widht=\"100vw\" height=\"100vh\" color=\"black\">hello</p>
-<p widht=\"100vw\" height=\"100vh\" color=\"black\">hello</p>
-<p        width="100 vh" height= "1760vw"    ></p>
-<p        width=100 height=1760    ></p>
-<span color="black"></span>
-<span>sdfasdf<p>dfd</p>dfadf<a></a></span>
-"""
+from os import path
+import sys
+
+args = sys.argv
 
 
-def parse(index=0, oneOnly=False):
+def parse(string, index=0, oneOnly=False):
     i = index
     while i < len(string):
         closingTag = ""
@@ -43,7 +39,7 @@ def parse(index=0, oneOnly=False):
                 i += 1
                 if string[i] != "/":
                     i -= 1
-                    payload = parse(index=i, oneOnly=True)
+                    payload = parse(string, index=i, oneOnly=True)
                     i = payload[0]  # type: ignore
                     value += payload[1]  # type: ignore
 
@@ -61,11 +57,20 @@ def parse(index=0, oneOnly=False):
                 i += 1
             if tag != closingTag:
                 print("error")
-            print(f"tag: {tag}; args: {args.strip()}; value: {value};")
+            if not oneOnly:
+                print(f"tag: {tag}; args: {args.strip()}; value: {value};")
 
         i += 1
         if oneOnly:
             return [i, f"[tag: {tag}; args: {args.strip()}; value: {value};]"]
 
 
-parse()
+if not len(args) >= 2:
+    print("No input file", file=sys.stderr)
+elif not path.isfile(args[1]):
+    print("File doesn't exist", file=sys.stderr)
+else:
+    with open(args[1], "r") as data:
+        # read the file
+        parse(data.read())
+        # variable storing chars at whicht the line end
