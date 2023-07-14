@@ -7,11 +7,11 @@ args = sys.argv
 def parse(string, index=0, oneOnly=False):
     i = index
     while i < len(string):
-        closingTag = ""
         tag = ""
+        closingTag = ""
         args = ""
-        value = ""
         finalArgs = ""
+        value = ""
         if string[i] == "<":
             i += 1
             g = i
@@ -23,20 +23,10 @@ def parse(string, index=0, oneOnly=False):
                 while string[i] != ">":
                     args += string[i]
                     i += 1
-                j = 0
-                while j < len(args):
-                    if args[j] != "=":
-                        finalArgs += args[j]
-                        finalArgs.strip()
-                    else:
-                        finalArgs += args[j]
-                        finalArgs.strip()
-                    j += 1
             except:
                 i = g
                 tag = ""
                 args = ""
-                finalArgs = ""
                 while string[i] != ">":
                     tag += string[i]
                     i += 1
@@ -67,14 +57,21 @@ def parse(string, index=0, oneOnly=False):
             while string[i] != ">":
                 closingTag += string[i]
                 i += 1
+            j = 0
+            while j < len(args):
+                if not (args[j] == " " and args[j + 1] == " "):
+                    finalArgs += args[j]
+                j += 1
+
             if tag != closingTag:
                 print("error")
             if not oneOnly:
-                print(f"tag: {tag}; args: {finalArgs}; value: {value};")
+                print(
+                    f"tag: {tag}; args: {finalArgs.strip()}; value: {value};")
 
         i += 1
         if oneOnly:
-            return [i, f"[tag: {tag}; args: {finalArgs}; value: {value};]"]
+            return [i, f"[tag: {tag}; args: {finalArgs.strip()}; value: {value};]"]
 
 
 if not len(args) >= 2:
