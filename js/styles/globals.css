@@ -17,3 +17,16 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+.scroll::-webkit-scrollbar {
+  width: 5px;
+}
+
+.scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scroll::-webkit-scrollbar-thumb {
+  background-color: #0000006b;
+  border-radius: 20px;
+}
